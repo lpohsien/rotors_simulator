@@ -211,13 +211,13 @@ file(GLOB msgs msgs/*.proto)
 PROTOBUF_GENERATE_CPP(PROTO_SRCS PROTO_HDRS ${msgs})
 
 # Create a shared library of protobuf messages (.so extension on Linux platforms)
-add_library(mav_msgs SHARED ${PROTO_SRCS})
-target_link_libraries(mav_msgs ${PROTOBUF_LIBRARY} gazebo_msgs)
+# add_library(mav_msgs SHARED ${PROTO_SRCS})
+# target_link_libraries(mav_msgs ${PROTOBUF_LIBRARY} gazebo_msgs)
 
 # This causes mav_msgs to be linked with every created library in this file from this
 # point forward.
 # NOTE: This is deprecated, should be using target_link_libraries instead
-link_libraries(mav_msgs)
+# link_libraries(mav_msgs)
 
 # ============================================== #
 # ==================== CATKIN ================== #
@@ -518,6 +518,11 @@ if (NOT NO_ROS)
   add_dependencies(rotors_gazebo_wind_plugin ${catkin_EXPORTED_TARGETS})
   list(APPEND targets_to_install rotors_gazebo_wind_plugin)
 endif()
+
+#========================================= MAV MESSAGES ==========================================//
+# Create a shared library of protobuf messages (.so extension on Linux platforms)
+add_library(mav_msgs SHARED ${PROTO_SRCS})
+target_link_libraries(mav_msgs ${PROTOBUF_LIBRARY} gazebo_msgs)
 
 # =============================================================================================== #
 # ======================================= EXTERNAL LIBRARIES ==================================== #
